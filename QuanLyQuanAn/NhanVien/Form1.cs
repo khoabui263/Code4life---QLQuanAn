@@ -32,7 +32,7 @@ namespace NhanVien
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
+            
         }
 
         private void bunifuTextbox1_OnTextChange(object sender, EventArgs e)
@@ -48,6 +48,14 @@ namespace NhanVien
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void bunifuFlatButton4_Click(object sender, EventArgs e)
+        {
+            if (this.pMenu.Size.Width == 168)
+                this.pMenu.Size = new System.Drawing.Size(53, 729);
+            else
+                this.pMenu.Size = new System.Drawing.Size(168, 729);
         }
     }
 }

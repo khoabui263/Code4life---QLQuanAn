@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="bunifu_ui_v1.52">
-      <HintPath>D:\Courses\bunifu\bunifu_ui_v1.52.dll</HintPath>
+      <HintPath>..\lib\bunifu_ui_v1.52.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

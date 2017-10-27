@@ -1,0 +1,10 @@
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\bin\Debug\NhanVien.exe.config
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\bin\Debug\NhanVien.exe
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\bin\Debug\NhanVien.pdb
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\bin\Debug\bunifu_ui_v1.52.dll
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.csprojResolveAssemblyReference.cache
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.Form1.resources
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.Properties.Resources.resources
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.csproj.GenerateResource.Cache
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.exe
+E:\Laptrinh\UD1\Doan\Code4life---QLQuanAn\QuanLyQuanAn\NhanVien\obj\Debug\NhanVien.pdb
