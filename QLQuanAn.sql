@@ -14,7 +14,7 @@ CREATE TABLE DANHMUC
 (
 	MADM CHAR (10) NOT NULL,
 	TENDM NVARCHAR (20),
-	GHICHU NVARCHAR (50),
+	GHICHU NVARCHAR (100),
 	PRIMARY KEY (MADM)
 )
 
@@ -33,7 +33,7 @@ CREATE TABLE CHINHANH
 (
 	MACN CHAR (10) NOT NULL,
 	TENCN NVARCHAR (30),
-	NGAYTAO Datetime,
+	NGAYTAO DATE,
 	MABAN CHAR (10),
 	MADM CHAR (10),
 	MAMA CHAR (10),
@@ -45,13 +45,13 @@ CREATE TABLE BAN
 (
 	MABAN CHAR (10) NOT NULL,
 	MACN CHAR (10),
+	SOCHONGOI INT,
 	SOLUONG INT,
 	THOIGIANDAT DATE,
-	LOAIHINHPHUCVU NVARCHAR (20),
-	TINHTRANG NVARCHAR (20),
+	TINHTRANG BIT,
 	PRIMARY KEY (MABAN)
 )
-go
+
 CREATE TABLE KHACHHANG
 (
 	MAKH CHAR (10) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE KHACHHANG
 	SODIENTHOAI INT,
 	EMAIL NVARCHAR (60),
 	DIACHI NVARCHAR (100),
-	GHICHU NVARCHAR (50), 
+	GHICHU NVARCHAR (100), 
 	PRIMARY KEY (MAKH)
 )
 
@@ -71,7 +71,7 @@ CREATE TABLE NHANVIEN
 	EMAILNV NVARCHAR (60),
 	DIACHI NVARCHAR (50),
 	CHUCVU NVARCHAR (50),
-	GHICHU NVARCHAR (20),
+	GHICHU NVARCHAR (100),
 	PRIMARY KEY (MANV)
 )
 
@@ -82,7 +82,7 @@ CREATE TABLE DONHANG
 	MAKH CHAR (10),
 	MANV CHAR (10),
 	NGAYTAO DATE,
-	TRANGTHAI NCHAR (20),
+	TRANGTHAI NVARCHAR (20),
 	PRIMARY KEY (MADH)
 )
 
@@ -98,8 +98,8 @@ CREATE TABLE CHITIETDONHANG
 	DONGIA INT,
 	VAT FLOAT,
 	TONGCONG FLOAT,
-	TRANGTHAI NCHAR (20),
-	PRIMARY KEY (MADH, MACN, MAKH, MANV)
+	TRANGTHAI NVARCHAR (20),
+	PRIMARY KEY (MADH, MACN, MAKH, MANV, MAMA)
 )
 
 CREATE TABLE CHIPHI
@@ -109,7 +109,7 @@ CREATE TABLE CHIPHI
 	LOAI NCHAR (10),
 	MANV CHAR (10),
 	DONGIA INT,
-	GHICHU NVARCHAR (20),
+	GHICHU NVARCHAR (100),
 	PRIMARY KEY (MACP)
 )
 
@@ -118,23 +118,23 @@ CREATE TABLE TAIKHOAN
 	USERNAME NCHAR (20) NOT NULL,
 	PASSWORDS NCHAR (20) NOT NULL,
 	MANV CHAR (10),
-	CHUCVU NVARCHAR (10),
+	CHUCVU NVARCHAR (50),
 	NGAYTAO DATE,
 	NGAYKETTHUC DATE,
-	GHICHU NVARCHAR (20),
+	GHICHU NVARCHAR (100),
 	PRIMARY KEY (USERNAME, PASSWORDS)
 )
 
 CREATE TABLE BAOCAO
 (
-	MABAOCAO CHAR (10) NOT NULL,
+	MABC CHAR (10) NOT NULL,
 	MANV CHAR (10),
 	MACN CHAR (10),
 	MAKH CHAR (10),
 	DOANHTHU INT,
 	TUNGAY DATE,
 	DENNGAY DATE,
-	PRIMARY KEY (MABAOCAO)
+	PRIMARY KEY (MABC)
 )
 
 ALTER TABLE MONAN 
@@ -154,12 +154,16 @@ ADD CONSTRAINT FK_CHINHANH_BAN
 FOREIGN KEY(MABAN) REFERENCES BAN(MABAN)
 
 ALTER TABLE BAN 
-ADD CONSTRAINT FK_BAN_KHACHHANG
-FOREIGN KEY(MAKH) REFERENCES KHACHHANG(MAKH)
-
-ALTER TABLE BAN 
 ADD CONSTRAINT FK_BAN_CHINHANH
 FOREIGN KEY(MACN) REFERENCES CHINHANH(MACN)
+
+ALTER TABLE DONHANG
+ADD CONSTRAINT FK_DONHANG_KHACHHANG
+FOREIGN KEY(MAKH) REFERENCES KHACHHANG(MAKH)
+
+ALTER TABLE DONHANG
+ADD CONSTRAINT FK_DONHANG_NHANVIEN
+FOREIGN KEY(MANV) REFERENCES NHANVIEN(MANV)
 
 ALTER TABLE CHITIETDONHANG
 ADD CONSTRAINT FK_CHITIETDONHANG_DONHANG
@@ -177,6 +181,9 @@ ALTER TABLE CHITIETDONHANG
 ADD CONSTRAINT FK_CHITIETDONHANG_NHANVIEN
 FOREIGN KEY(MANV) REFERENCES NHANVIEN(MANV)
 
+ALTER TABLE CHITIETDONHANG
+ADD CONSTRAINT FK_CHITIETDONHANG_MONAN
+FOREIGN KEY(MAMA) REFERENCES MONAN(MAMA)
 
 ALTER TABLE CHIPHI
 ADD CONSTRAINT FK_CHIPHI_NHANVIEN
@@ -204,23 +211,31 @@ insert into DANHMUC values('DM03', 'Hải sản', 'Bao gồm các món hải 
 insert into DANHMUC values('DM04', 'Tráng miệng', 'Bao gồm các món tráng miệng như: rau câu, ổi,...')
 insert into DANHMUC values('DM05', 'Thức uống', 'Bao gồm các món thức uống như: coca, pepsi,...')
 
-insert into MONAN values('MA01', 'Bún đậu mắm tôm', 'Bún-phở', 100, 'bát', 25000, 20000)
-insert into MONAN values('MA02', 'Bún bò Huế', 'Bún-phở', 200, 'bát', 30000, 20000)
-insert into MONAN values('MA03', 'Cá thu hấp gừng', 'Hải sản', 50, 'dĩa', 50000, 40000)
+insert into MONAN values('MA01', 'Bún đậu mắm tôm', 'DM02', 'bát', 25000, 20000)
+insert into MONAN values('MA02', 'Bún bò Huế', 'DM02', 'bát', 30000, 20000)
+insert into MONAN values('MA03', 'Cá thu hấp gừng', 'DM03', 'dĩa', 50000, 40000)
 
-insert into CHINHANH values('CN01', 'Nguyễn Văn Cừ', 'B01', 'DM01', 'MA01', '227 Nguyễn Văn Cừ Quận 5')
-insert into CHINHANH values('CN01', 'Nguyễn Văn Cừ', 'B02', 'DM02', 'MA02', '227 Nguyễn Văn Cừ Quận 5')
-insert into CHINHANH values('CN02', 'Võ Thị Sáu', 'B01', 'DM01', 'MA01', '150 Võ Thị Sáu Quận 3')
-insert into CHINHANH values('CN02', 'Võ Thị Sáu', 'B02', 'DM02', 'MA02', '150 Võ Thị Sáu Quận 3')
+	MACN CHAR (10) NOT NULL,
+	TENCN NVARCHAR (30),
+	NGAYTAO DATE,
+	MABAN CHAR (10),
+	MADM CHAR (10),
+	MAMA CHAR (10),
+	DIACHI NVARCHAR (100),
 
-insert into BAN values('B01', 4, 'KH01', '20171010', 1, 'CN01')
-insert into BAN values('B02', 10, 'KH02', '20171111', 0, 'CN01')
-insert into BAN values('B03', 8, 'KH03', '20171212', 0, 'CN02')
-insert into BAN values('B04', 10, 'KH03', '20170101', 1, 'CN02')
+insert into CHINHANH values('CN01', 'Nguyễn Văn Cừ', '20151010', 'B01', 'DM01', 'MA01', '227 Nguyễn Văn Cừ Quận 5')
+insert into CHINHANH values('CN01', 'Nguyễn Văn Cừ', '20151010', 'B02', 'DM02', 'MA02', '227 Nguyễn Văn Cừ Quận 5')
+insert into CHINHANH values('CN02', 'Võ Thị Sáu', '20151010', 'B01', 'DM01', 'MA01', '150 Võ Thị Sáu Quận 3')
+insert into CHINHANH values('CN02', 'Võ Thị Sáu', '20151010', 'B02', 'DM02', 'MA02', '150 Võ Thị Sáu Quận 3')
 
-insert into KHACHHANG values('KH01', 'Bùi Đăng Khoa', 0123456, '200 Đinh Tiên Hoàng', 'vv')
-insert into KHACHHANG values('KH02', 'Trần Đình Hoàng', 1234567, '17/28 Lý Thường Kiệt', 'vv')
-insert into KHACHHANG values('KH03', 'Trần Đăng Khoa', 4444444, '50A Trần Hưng Đạo', 'vv')
+insert into BAN values('B01', 'CN01', 4, 1, 'KH01', '20171010', 1)
+insert into BAN values('B02', 'CN01', 10, 2, 'KH02', '20171111', 0)
+insert into BAN values('B01', 'CN02', 8, 5, 'KH03', '20171212', 0)
+insert into BAN values('B02', 'CN02', 10, 10, 'KH03', '20170101', 1)
+
+insert into KHACHHANG values('KH01', 'Bùi Đăng Khoa', 0123456, 'k1@gmail.com', '200 Đinh Tiên Hoàng', 'vv')
+insert into KHACHHANG values('KH02', 'Trần Đình Hoàng', 1234567, 'h1@gmail.com', '17/28 Lý Thường Kiệt', 'vv')
+insert into KHACHHANG values('KH03', 'Trần Đăng Khoa', 4444444, 'k2@gmail.com', '50A Trần Hưng Đạo', 'vv')
 
 insert into NHANVIEN values('NV01', 'Khoa', 111111, '100 Đinh Tiên Hoàng', 'Nhân viên bán hàng', 'Có thành tích tốt trong công việc')
 insert into NHANVIEN values('NV02', 'Hoàng', 222222, '20 Lý Thường Kiệt', 'Nhân viên bán hàng', 'Có cố gắng trong công việc')
